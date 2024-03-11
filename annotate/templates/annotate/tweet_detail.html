@@ -1,0 +1,30 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">Dashboard</a>
+{% endblock %}
+
+{% block page_title %}
+Tweet Detail
+{% endblock %}
+
+{% block content %}
+<table class="detail_table">
+  <colgroup>
+    <col width="15%" />
+    <col width="100%" />
+  </colgroup>
+
+  <tr><td><strong>{% get_verbose_field_name tweet "id" %}:</strong></td><td>{{ tweet.id }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name tweet "id_str" %}:</strong></td><td>{{ tweet.id_str }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name tweet "created_at" %}:</strong></td><td>{{ tweet.created_at }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name tweet "user_id_str" %}:</strong></td><td>{{ tweet.user_id_str }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name tweet "full_text" %}:</strong></td><td>{{ tweet.full_text }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name tweet "retweet_count" %}:</strong></td><td>{{ tweet.retweet_count }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name tweet "lang" %}:</strong></td><td>{{ tweet.lang }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name tweet "title" %}:</strong></td><td>{{ tweet.title }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name tweet "crawl_date" %}:</strong></td><td>{{ tweet.crawl_date }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name tweet "item_rating" %}:</strong></td><td>{{ tweet.item_rating }}</td></tr>
+</table>
+{% endblock %}

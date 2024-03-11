@@ -1,0 +1,226 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+
+{% if sentence.skip_validations %}
+  {% if sentence.review_level == 5 %}
+    <a href="{% url 'annotate:ext_sentence_index5' %}">< Sentences</a>
+  {% endif %}
+{% else %}
+  {% if sentence.review_level == 2 %}
+    <a href="{% url 'annotate:sentence_index2' %}">< Sentences</a>
+  {% endif %}
+  {% if sentence.review_level == 4 %}
+    <a href="{% url 'annotate:sentence_index4' %}">< Sentences</a>
+  {% endif %}
+  {% if sentence.review_level == 5 %}
+    <a href="{% url 'annotate:sentence_index5' %}">< Sentences</a>
+  {% endif %}
+{% endif %}
+{% endblock %}
+
+{% block page_title %}
+Edit Sentence
+{% endblock %}
+
+{% block content %}
+<!-- <ul> -->
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <li><p class="form_title">{% get_verbose_field_name sentence "title" %}</p></li>
+    <li>{{ sentence.title }}</li>
+
+    <!-- <li><p class="form_title">{% get_verbose_field_name sentence "sentence" %}</p></li>
+    <li>{{ form.sentence }}</li>
+    <li>{{ form.sentence.errors }}</li> -->
+
+    <li>
+      <table class="columns_table">
+        <colgroup>
+          <col width="10%" />
+          <col width="100%" />
+        </colgroup>
+        <tr>
+          <td><p class="form_title">{% get_verbose_field_name sentence "new_sentence_id" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "sentence" %}</p></td>
+        </tr>
+        <tr>
+          <td>{{ form.new_sentence_id }}</td>
+          <td>{{ form.sentence }}</td>
+        </tr>
+      </table>
+    </li>
+
+    <!-- <li>{{ form.review_level.label_tag }}</li> -->
+    <li><p class="form_title">{% get_verbose_field_name sentence "review_level" %}</p></li>
+    <li>{{ form.review_level }}</li>
+    <li>{{ form.review_level.errors }}</li>
+
+    <!-- <li>{{ form.check_worthy.label_tag }}</li> -->
+    <li><p class="form_title">{% get_verbose_field_name sentence "check_worthy" %}</p></li>
+    <li>{{ form.check_worthy }}</li>
+    <li>{{ form.check_worthy.errors.label_tag }}</li>
+
+    <!-- <li>{{ form.health_terms.label_tag }}</li> -->
+    <li><p class="form_title">{% get_verbose_field_name sentence "health_terms" %}</p></li>
+    <li>{{ form.health_terms }}</li>
+    <li>{{ form.health_terms.errors }}</li>
+
+    <li>
+      <table class="columns_table">
+        <tr>
+          <td><p class="form_title">{% get_verbose_field_name sentence "check_worthy_auto" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "check_worthy_score_auto" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "common_health_terms" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "subject" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "predicate" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "object" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "manually_identified_predicate" %}</p></td>
+        </tr>
+        <tr>
+          <td>{{ sentence.check_worthy_auto }}</td>
+          <td>{{ sentence.check_worthy_score_auto }}</td>
+          <td>{{ sentence.common_health_terms }}</td>
+          <td>{{ sentence.subject }}</td>
+          <td>{{ sentence.predicate }}</td>
+          <td>{{ sentence.object }}</td>
+          <td>{{ form.manually_identified_predicate }}</td>
+        </tr>
+      </table>
+    </li>
+
+    <hr>
+    <li>
+      <p class="form_title_underline">Annotation guide</p>
+    </li>
+
+    <table class="columns_table">
+      <tr>
+        <td>
+          <p class="form_title">Factual:</p>
+        </td>
+        <td>Contains a claim that can be checked.</td>
+      </tr>
+      <tr>
+        <td>
+          <p class="form_title">Relevant:</p>
+        </td>
+        <td>Interesting for a wide audience. Signal words: shocking, stricking, gigantic, problematic, etc. Change words: increase, decrease, increasingly, growth, etc.</td>
+      </tr>
+      <tr>
+        <td>
+          <p class="form_title">Error</p>
+        </td>
+        <td>Incomprehensible sentences. Use only in exceptional cases.</td>
+      </tr>
+    </table>
+
+    <li>If claim is about...</li>
+    <li>
+      <table class="columns_table">
+        <tr>
+          <td>
+            <p class="form_title">Non-factual</p>
+          </td>
+          <td>
+            <p class="form_title">Factual</p>
+          </td>
+          <td>
+            <p class="form_title">Non-relevant</p>
+          </td>
+          <td>
+            <p class="form_title">Relevant</p>
+          </td>
+        </tr>
+        <tr>
+          <td>Promises</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Proverbs and sayings</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Instructions given/received, recipes</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Own emotions / mood</td>
+          <td>Own emotions with factual statement</td>
+          <td></td>
+          <td>Interesting for a wide audience</td>
+        </tr>
+        <tr>
+          <td>Opinions / value judgements</td>
+          <td>Opinions with factual statement</td>
+          <td></td>
+          <td>Interesting for a wide audience</td>
+        </tr>
+        </tr>
+        <tr>
+          <td>Questions</td>
+          <td>Questions with factual statement</td>
+          <td></td>
+          <td>Interesting for a wide audience</td>
+        </tr>
+        <tr>
+          <td>Predictions</td>
+          <td>Concrete predictions that can be checked</td>
+          <td></td>
+          <td>Interesting for a wide audience</td>
+        </tr>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Reports and investigations</td>
+          <td></td>
+          <td>Interesting for a wide audience</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Procedures and announcements</td>
+          <td>Always</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Vague claims: what is about? / what the subject is?</td>
+          <td>Always</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Performative sentences</td>
+          <td>Always</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Digits and numbers</td>
+          <td>Obvious, non-controversial, official, technocratic</td>
+          <td>Indicating change, controversial, excessive</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Quotes: Someone said something, what they said is factual</td>
+          <td>What they said is not interesting for a wide audience</td>
+          <td>What they said is interesting for a wide audience</td>
+        </tr>
+      </table>
+    </li>
+
+    <li>
+      <input type="submit" value="Update Sentence">
+    </li>
+  </form>
+<!-- </ul> -->
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+
+{% if sentence.skip_validations %}
+  {% if sentence.review_level == 9 %}
+    <a href="{% url 'annotate:ext_cw_sentence_index9' %}">< Sentences</a>
+  {% endif %}
+{% else %}
+  {% if sentence.review_level == 6 %}
+    <a href="{% url 'annotate:cw_sentence_index6' %}">< Sentences</a>
+  {% endif %}
+  {% if sentence.review_level == 7 %}
+    <a href="{% url 'annotate:cw_sentence_index7' %}">< Sentences</a>
+  {% endif %}
+  {% if sentence.review_level == 8 %}
+    <a href="{% url 'annotate:cw_sentence_index8' %}">< Sentences</a>
+  {% endif %}
+  {% if sentence.review_level == 9 %}
+    <a href="{% url 'annotate:cw_sentence_index9' %}">< Sentences</a>
+  {% endif %}
+{% endif %}
+
+<a href="{% url 'annotate:cw_sentence_update' sentence.id %}">> Edit</a>
+<a href="{% url 'annotate:sentence_delete' sentence.id %}">> Delete</a>
+{% endblock %}
+
+{% block page_title %}
+Check Worthy Sentence Detail
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <p><a href="{% url 'annotate:cw_sentence_update' sentence.id %}">Edit</a> <a href="{% url 'annotate:sentence_delete' sentence.id %}">Delete</a></p>
+</div>
+
+<table class="detail_table">
+  <colgroup>
+    <col width="15%" />
+    <col width="100%" />
+  </colgroup>
+
+  <tr><td><strong>{% get_verbose_field_name sentence "item_id" %}:</strong></td><td>{{ sentence.item_id }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "new_sentence_id" %}:</strong></td><td>{{ sentence.new_sentence_id }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "title" %}:</strong></td><td>{{ sentence.title }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "sentence" %}:</strong></td><td>{{ sentence.sentence }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "subject" %}:</strong></td><td>{{ sentence.subject }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "big_subject" %}:</strong></td><td>{{ sentence.big_subject }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "subject_cuis" %}:</strong></td><td>{{ sentence.subject_cuis }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "subject_text_cuis" %}:</strong></td><td>{{ sentence.subject_text_cuis }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "predicate" %}:</strong></td><td>{{ sentence.predicate }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "big_predicate" %}:</strong></td><td>{{ sentence.big_predicate }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "manually_identified_predicate" %}:</strong></td><td>{{ sentence.manually_identified_predicate }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "predicate_cuis" %}:</strong></td><td>{{ sentence.predicate_cuis }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "predicate_text_cuis" %}:</strong></td><td>{{ sentence.predicate_text_cuis }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "object" %}:</strong></td><td>{{ sentence.object }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "big_object" %}:</strong></td><td>{{ sentence.big_object }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "object_cuis" %}:</strong></td><td>{{ sentence.object_cuis }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "object_text_cuis" %}:</strong></td><td>{{ sentence.object_text_cuis }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "spo_type" %}:</strong></td><td>{{ sentence.spo_type }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "review_level" %}:</strong></td><td>{{ sentence.review_level }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "rating" %}:</strong></td><td>{{ sentence.rating }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "needs_revision" %}:</strong></td><td>{{ sentence.needs_revision }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "sentence_class_score_auto" %}:</strong></td><td>{{ sentence.sentence_class_score_auto }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "sentence_class_auto" %}:</strong></td><td>{{ sentence.sentence_class_auto }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "sentence_class" %}:</strong></td><td>{{ sentence.sentence_class }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name sentence "instance_type" %}:</strong></td><td>{{ sentence.instance_type }}</td></tr>
+</table>
+{% endblock %}

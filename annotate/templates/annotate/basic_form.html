@@ -1,0 +1,24 @@
+{% extends "annotate/base_generic.html" %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">Dashboard</a>
+{% endblock %}
+
+
+{% block content %}
+<!-- <ul> -->
+  <form action="" method="post">
+      {% csrf_token %}
+
+      {% for field in form %}
+        <li>{{ field.label_tag }}</li>
+        <li>{{ field }}</li>
+        <li>{{ field.errors }}</li>
+      {% endfor %}
+
+      <li>
+        <input type="submit" value="Submit">
+      </li>
+    </form>
+<!-- </ul> -->
+{% endblock %}

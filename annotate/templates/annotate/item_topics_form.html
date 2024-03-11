@@ -1,0 +1,84 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+<a href="{% url 'annotate:item_topics_index' %}">< Topics/Claims</a>
+{% endblock %}
+
+{% block page_title %}
+Edit Item Topics/Claim
+{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+
+    <li><p class="form_title">{% get_verbose_field_name item "title" %}</p></li>
+    <li>{{ item.title }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "claim" %}</p></li>
+    <li>{{ item.claim }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "review_url" %}</p></li>
+    <li><a href="{{ item.review_url }}" target="_blank">{{ item.review_url }}</a></li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "main_topic" %}</p></li>
+    <li>{{ form.main_topic }}</li>
+    <li>{{ form.main_topic.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "main_claim" %}</p></li>
+    <li>{{ form.main_claim }}</li>
+    <li>{{ form.main_claim.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "item_class" %}</p></li>
+    <li>{{ item.item_class }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "item_class_4" %}</p></li>
+    <li>{{ item.item_class_4 }}</li>
+
+    <!-- <li><p class="form_title">{% get_verbose_field_name item "text" %}</p></li>
+    <li>{{ item.text }}</li> -->
+
+    <li><p class="form_title">Sentences</p></li>
+    <li>
+      <table class="detail_table">
+        <colgroup>
+          <col width="7%" />
+          <col width="10%" />
+          <col width="10%" />
+          <col width="10%" />
+          <col width="100%" />
+        </colgroup>
+        <tr>
+          <td style="text-decoration: underline;">{% get_verbose_field_name item.get_sentences.0 "new_sentence_id" %}</td>
+          <td style="text-decoration: underline;">{% get_verbose_field_name item.get_sentences.0 "sentence_class" %}</td>
+          <td style="text-decoration: underline;">{% get_verbose_field_name item.get_sentences.0 "check_worthy" %}</td>
+          <td style="text-decoration: underline;">{% get_verbose_field_name item.get_sentences.0 "big_predicate" %}</td>
+          <td style="text-decoration: underline;">{% get_verbose_field_name item.get_sentences.0 "sentence" %}</td>
+        </tr>
+        {% for sentence in item.get_sentences %}
+        <tr>
+          {% if sentence.check_worthy == "FR" %}
+            <td style="color:slateblue;">{{sentence.new_sentence_id}}</td>
+            <td style="color:slateblue;">{{sentence.sentence_class}}</td>
+            <td style="color:slateblue;">{{sentence.check_worthy}}</td>
+            <td style="color:slateblue;">{{sentence.big_predicate}}</td>
+            <td style="color:slateblue;">{{sentence.sentence}}</td>
+          {% else %}
+            <td>{{sentence.new_sentence_id}}</td>
+            <td>{{sentence.sentence_class}}</td>
+            <td>{{sentence.check_worthy}}</td>
+            <td>{{sentence.big_predicate}}</td>
+            <td>{{sentence.sentence}}</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </table>
+    </li>
+
+    <li>
+      <input type="submit" value="Update Item">
+    </li>
+  </form>
+{% endblock %}

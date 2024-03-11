@@ -1,0 +1,82 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+{% load static %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+<a href="{% url 'annotate:sentence_create' %}">> New</a>
+{% endblock %}
+
+{% block page_title %}
+Sentences
+{% endblock %}
+
+{% block content %}
+
+    {% if sentence_list %}
+
+        <table class="simple_table">
+            <colgroup>
+                <col width="6%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="10%" />
+                <col width="29%" />
+            </colgroup>
+            <tr>
+                <th></th>
+                <th>{% get_verbose_field_name sentence_list.0 "item_id" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "new_sentence_id" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "review_level" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "check_worthy_score_auto" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "check_worthy_auto" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "check_worthy" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "rating" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "subject" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "predicate" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "object" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "spo_type" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "common_health_terms" %}</th>
+                <th>{% get_verbose_field_name sentence_list.0 "sentence" %}</th>
+            </tr>
+            {% for sentence in sentence_list %}
+            <tr>
+                <td><a href="{% url 'annotate:sentence_detail' sentence.id %}" title="View sentence">&#128065;</a>
+                    <a href="{% url 'annotate:sentence_update' sentence.id %}?next={{ request.get_full_path }}" title="Edit sentence">&#128221;</a>
+                    <a href="{% url 'annotate:sentence_duplicate' sentence.id %}" title="Duplicate sentence">&#128203;</a>
+                    <a id="nextReviewLevel" title="Next review level" href="#" onclick="NextReviewLevel({{ sentence.id }}, {{ sentence.review_level }});return false;">&#9193;</a>
+                <td><a href="{% url 'annotate:item_detail' sentence.item_id %}">{{ sentence.item_id }}</a></td>
+                <td>{{ sentence.new_sentence_id }}</a></td>
+                <td>{{ sentence.review_level }}</td>
+                <td>{{ sentence.check_worthy_score_auto|floatformat:4 }}</td>
+                <td>{{ sentence.check_worthy_auto }}</td>
+                <td>{{ sentence.check_worthy }}</td>
+                <td>{{ sentence.rating }}</td>
+                <td class="ellipsis_cell">{{ sentence.subject }}</td>
+                <td class="ellipsis_cell">{{ sentence.predicate }}</td>
+                <td class="ellipsis_cell">{{ sentence.object }}</td>
+                <td>{{ sentence.spo_type }}</td>
+                <td class="ellipsis_cell">{{ sentence.common_health_terms }}</td>
+                <td class="ellipsis_cell">{{ sentence.sentence }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <div class="row">
+            <p>No sentences are available.</p>
+        </div>
+    {% endif %}
+
+    <script src="{% static 'annotate/js/sentence.js' %}"></script>
+
+{% endblock %}

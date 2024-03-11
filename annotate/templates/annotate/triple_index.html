@@ -1,0 +1,70 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+{% endblock %}
+
+{% block page_title %}
+Triples
+{% endblock %}
+
+{% block content %}
+    {% if triple_list %}
+
+        <table class="simple_table">
+            <colgroup>
+                <col width="3%" />
+                <col width="3%" />
+                <col width="5%" />
+                <col width="3%" />
+                <col width="11%" />
+                <col width="20%" />
+                <col width="15%" />
+                <col width="20%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />                
+            </colgroup>
+
+            <tr>
+                <th></th>
+                <th>{% get_verbose_field_name triple_list.0 "id" %}</th>
+                <th>{% get_verbose_field_name triple_list.0 "item_id" %}</th>
+                <th>{% get_verbose_field_name triple_list.0 "sentence_id" %}</th>
+                <th>{% get_verbose_field_name triple_list.0 "publication_date" %}</th>
+                <th>{% get_verbose_field_name triple_list.0 "subject" %}</th>
+                <th>{% get_verbose_field_name triple_list.0 "predicate" %}</th>
+                <th>{% get_verbose_field_name triple_list.0 "object" %}</th>
+                <th>{% get_verbose_field_name triple_list.0 "sentence_class" %}</th>
+                <th>{% get_verbose_field_name triple_list.0 "sentence_check_worthy" %}</th>
+                <th>{% get_verbose_field_name triple_list.0 "item_class_4" %}</th>
+                <th>{% get_verbose_field_name triple_list.0 "instance_type" %}</th>                                
+            </tr>
+
+            {% for triple in triple_list %}
+            <tr>
+                <td><a href="{% url 'annotate:triple_update' triple.id %}?next={{ request.get_full_path }}" title="Edit triple">&#128221;</a></td>
+                <td>{{ triple.id }}</td>
+                <td>{{ triple.item_id }}</td>
+                <td>{{ triple.sentence_id }}</td>
+                <td>{{ triple.publication_date }}</td>
+                <td>{{ triple.subject }}</td>
+                <td>{{ triple.predicate }}</td>
+                <td>{{ triple.object }}</td>
+                <td>{{ triple.sentence_class }}</td>
+                <td>{{ triple.sentence_check_worthy }}</td>
+                <td>{{ triple.item_class_4 }}</td>
+                <td>{{ triple.instance_type }}</td>                
+            </tr>
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <div class="row">
+            <p>No triples are available.</p>
+        </div>
+    {% endif %}
+
+{% endblock %}

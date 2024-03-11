@@ -1,0 +1,30 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+{% endblock %}
+
+{% block page_title %}
+Configuration
+{% endblock %}
+
+{% block content %}
+<!-- <ul> -->
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <li><p class="form_title">{% get_verbose_field_name configuration "show_tweets" %}</p></li>
+    <li>{{ form.show_tweets }}</li>
+    <li>{{ form.show_tweets.errors.label_tag }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name configuration "environment_type" %}</p></li>
+    <li>{{ form.environment_type }}</li>
+    <li>{{ form.environment_type.errors.label_tag }}</li>
+
+    <li>
+      <input type="submit" value="Update Config">
+    </li>
+  </form>
+<!-- </ul> -->
+{% endblock %}

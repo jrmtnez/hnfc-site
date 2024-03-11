@@ -1,0 +1,452 @@
+{% extends "annotate/base_generic.html" %}
+
+{% block sidebar %}
+<a href="items/">> Items</a>
+<a href="sentences/">> Sentences</a>
+<a href="items_topics/">> Topics/Claims</a>
+<a href="triples/">> Triples</a>
+{% if configuration_show_tweets == True %}
+    <a href="tweets/">> Tweets</a>
+{% endif %}
+<a href="configuration/0/update/">> Configuration</a>
+{% endblock %}
+
+{% block page_title %}
+Dashboard - {{ configuration_environment_type }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        {% if items_pending_acceptance == 0 %}
+            <div class="column" style="background-color:#aaa;">
+                <h2><a href="items0/">{{ items_pending_acceptance }}</a></h2>
+                <p>Items pending acceptance</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:coral;">
+                <h2><a href="items0/">{{ items_pending_acceptance }}</a></h2>
+                <p>Items pending acceptance</p>
+            </div>
+        {% endif %}
+
+        <div class="column">
+        </div>
+
+        {% if external_items_pending_acceptance == 0 %}
+            <div class="column" style="background-color:#aaa;">
+                <h2><a href="extitems0/">{{ external_items_pending_acceptance }}</a></h2>
+                <p>External items pending acceptance</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:coral;">
+                <h2><a href="extitems0/">{{ external_items_pending_acceptance }}</a></h2>
+                <p>External items pending acceptance</p>
+        </div>
+        {% endif %}
+
+        <div class="column">
+        </div>
+
+        {% if configuration_show_tweets == True %}
+            <div class="column" style="background-color:deepskyblue;">
+                <h2> {{ total_twitter_users }}</h2>
+                <p>Twitter users</p>
+            </div>
+        {% endif %}
+    </div>
+
+
+    <div class="row">
+        {% if items_pending_sentence_split_validation == 0 %}
+            <div class="column" style="background-color:#bbb;">
+                <h2>{{ items_pending_sentence_split_validation }}</h2>
+                <p>Items pending sentence split validation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:#bbb;">
+                <h2><a href="items2/">{{ items_pending_sentence_split_validation }}</a></h2>
+                <p>Items pending sentence split validation</p>
+            </div>
+        {% endif %}
+
+        {% if sentences_pending_split_validation == 0 %}
+            <div class="column" style="background-color:#bbb;">
+                <h2>{{ sentences_pending_split_validation }}</h2>
+                <p>Sentences pending split validation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:coral;">
+                <h2><a href="sentences2/">{{ sentences_pending_split_validation }}</a></h2>
+                <p>Sentences pending split validation</p>
+            </div>
+        {% endif %}
+
+        <div class="column" style="background-color:whitesmoke;">
+            {% if external_items_pending_sentence_split > 0 %}
+                <h2><a href="extitems1/">{{ external_items_pending_sentence_split }}</a></h2>
+                <p>External items pending sentence split</p>
+            {% endif %}
+        </div>
+
+        <div class="column" style="background-color:whitesmoke;">
+        </div>
+
+        {% if configuration_show_tweets == True %}
+            {% if tweets_pending_acceptance == 0 %}
+                <div class="column" style="background-color:#bbb;">
+                    <h2>{{ tweets_pending_acceptance }}</h2>
+                    <p>Tweets pending acceptance</p>
+                </div>
+            {% else %}
+                <div class="column" style="background-color:coral;">
+                    <h2><a href="tweets0/">{{ tweets_pending_acceptance }}</a></h2>
+                    <p>Tweets pending acceptance</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+
+    <div class="row">
+        {% if items_pending_sentence_cw_validation == 0 %}
+            <div class="column" style="background-color:#ccc;">
+                <h2>{{ items_pending_sentence_cw_validation }}</h2>
+                <p>Items pending sentence check-worthy validation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:#ccc;">
+                <h2><a href="items4/">{{ items_pending_sentence_cw_validation }}</a></h2>
+                <p>Items pending sentence check-worthy validation</p>
+            </div>
+        {% endif %}
+
+        {% if sentences_pending_cw_validation == 0 %}
+            <div class="column" style="background-color:#ccc;">
+                <h2>{{ sentences_pending_cw_validation }}</h2>
+                <p>Sentences pending check-worthy validation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:coral;">
+                <h2><a href="sentences4/">{{ sentences_pending_cw_validation }}</a></h2>
+                <p>Sentences pending check-worthy validation</p>
+            </div>
+        {% endif %}
+
+        <div class="column" style="background-color:whitesmoke;">
+            {% if external_items_pending_cw_classification > 0 %}
+                <h2><a href="extitems3/">{{ external_items_pending_cw_classification }}</a></h2>
+                <p>External items pending check-worthy classification</p>
+            {% endif %}
+        </div>
+
+        <div class="column" style="background-color:whitesmoke;">
+            {% if external_sentences_pending_cw_classification > 0 %}
+                <h2><a href="extsentences3/">{{ external_sentences_pending_cw_classification }}</a></h2>
+                <p>External sentences pending check-worthy classification</p>
+            {% endif %}
+        </div>
+
+        {% if configuration_show_tweets == True %}
+            {% if tweets_pending_cw_validation == 0 %}
+                <div class="column" style="background-color:#ccc;">
+                    <h2>{{ tweets_pending_cw_validation }}</h2>
+                    <p>Tweets pending check-worthy validation</p>
+                </div>
+            {% else %}
+                <div class="column" style="background-color:coral;">
+                    <h2><a href="tweets4/">{{ tweets_pending_cw_validation }}</a></h2>
+                    <p>Tweets pending check-worthy validation</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+
+    <div class="row">
+        {% if items_with_sentence_cw_annotation == 0 %}
+            <div class="column" style="background-color:#ccc;">
+                <h2>{{ items_with_sentence_cw_annotation }}</h2>
+                <p>Items with sentence check-worthy annotation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:#ccc;">
+                <h2><a href="items5/">{{ items_with_sentence_cw_annotation }}</a></h2>
+                <p>Items with sentence check-worthy annotation</p>
+            </div>
+        {% endif %}
+
+
+        {% if sentences_with_cw_annotation == 0 %}
+            <div class="column" style="background-color:darkkhaki;">
+                <h2>{{ sentences_with_cw_annotation }}</h2>
+                <p>Sentences with check-worthy annotation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:darkkhaki;">
+                <h2><a href="sentences5/">{{ sentences_with_cw_annotation }}</a></h2>
+                <p>Sentences with check-worthy annotation</p>
+            </div>
+        {% endif %}
+
+        {% if external_items_with_sentence_cw_annotation == 0 %}
+            <div class="column" style="background-color:#ccc;">
+                <h2>{{ external_items_with_sentence_cw_annotation }}</h2>
+                <p>External items with sentence check-worthy annotation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:#ccc;">
+                <h2><a href="extitems5/">{{ external_items_with_sentence_cw_annotation }}</a></h2>
+                <p>External items with sentence check-worthy annotation</p>
+            </div>
+        {% endif %}
+
+        {% if external_sentences_with_cw_annotation == 0 %}
+            <div class="column" style="background-color:darkkhaki;">
+                <h2>{{ external_sentences_with_cw_annotation }}</h2>
+                <p>External sentences with check-worthy annotation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:darkkhaki;">
+                <h2><a href="extsentences5/">{{ external_sentences_with_cw_annotation }}</a></h2>
+                <p>External sentences with check-worthy annotation</p>
+            </div>
+        {% endif %}
+
+        {% if configuration_show_tweets == True %}
+            {% if tweets_with_cw_annotation == 0 %}
+                <div class="column" style="background-color:darkkhaki;">
+                    <h2>{{ tweets_with_cw_annotation }}</h2>
+                    <p>Tweets with check-worthy annotation</p>
+                </div>
+            {% else %}
+                <div class="column" style="background-color:darkkhaki;">
+                    <h2><a href="tweets5/">{{ tweets_with_cw_annotation }}</a></h2>
+                    <p>Tweets with check-worthy annotation</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+
+    <div class="row">
+        {% if items_pending_sentence_spo_validation == 0 %}
+            <div class="column" style="background-color:#ddd;">
+                <h2>{{ items_pending_sentence_spo_validation }}</h2>
+                <p>Items pending sentence spo validation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:#ddd;">
+                <h2><a href="items6/">{{ items_pending_sentence_spo_validation }}</a></h2>
+                <p>Items pending sentence spo validation</p>
+            </div>
+        {% endif %}
+
+        {% if sentences_pending_spo_validation == 0 %}
+            <div class="column" style="background-color:#ddd;">
+                <h2>{{ sentences_pending_spo_validation }}</h2>
+                <p>Sentences pending spo validation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:coral;">
+                <h2><a href="sentences6/">{{ sentences_pending_spo_validation }}</a></h2>
+                <p>Sentences pending spo validation</p>
+            </div>
+        {% endif %}
+
+        <div class="column" style="background-color:whitesmoke;">
+        </div>
+
+        <div class="column" style="background-color:whitesmoke;">
+        </div>
+
+        {% if configuration_show_tweets == True %}
+            <!-- TODO falta split validation -->
+            <div class="column" style="background-color:whitesmoke;">
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        {% if items_pending_sentence_fc_validation == 0 %}
+            <div class="column" style="background-color:#ddd;">
+                <h2>{{ items_pending_sentence_fc_validation }}</h2>
+                <p>Items pending sentence fact-checking validation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:#ddd;">
+                <h2><a href="items7/">{{ items_pending_sentence_fc_validation }}</a></h2>
+                <p>Items pending sentence fact-checking validation</p>
+            </div>
+        {% endif %}
+
+        {% if sentences_pending_fc_validation == 0 %}
+            <div class="column" style="background-color:#ddd;">
+                <h2>{{ sentences_pending_fc_validation }}</h2>
+                <p>Sentences pending fact-checking validation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:coral;">
+                <h2><a href="sentences7/">{{ sentences_pending_fc_validation }}</a></h2>
+                <p>Sentences pending fact-checking validation</p>
+            </div>
+        {% endif %}
+
+        <div class="column" style="background-color:whitesmoke;">
+            {% if external_items_pending_fc_classification > 0 %}
+                <h2><a href="extitems7/">{{ external_items_pending_fc_classification }}</a></h2>
+                <p>External items pending fact-checking classification</p>
+            {% endif %}
+        </div>
+
+        <div class="column" style="background-color:whitesmoke;">
+            {% if external_sentences_pending_fc_classification > 0 %}
+                <h2><a href="extsentences7/">{{ external_sentences_pending_fc_classification }}</a></h2>
+                <p>External sentences pending fact-checking classification</p>
+            {% endif %}
+        </div>
+
+        {% if configuration_show_tweets == True %}
+            <!-- TODO debe ser 7 -->
+            {% if tweets_pending_fc_validation == 0 %}
+                <div class="column" style="background-color:#ddd;">
+                    <h2>{{ tweets_pending_fc_validation }}</h2>
+                    <p>Tweets pending fact-checking validation</p>
+                </div>
+            {% else %}
+                <div class="column" style="background-color:coral;">
+                    <h2><a href="tweets6/">{{ tweets_pending_fc_validation }}</a></h2>
+                    <p>Tweets pending fact-checking validation</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="row">
+        {% if items_with_sentence_fc_annotation == 0 %}
+            <div class="column" style="background-color:#ddd;">
+                <h2>{{ items_with_sentence_fc_annotation }}</h2>
+                <p>Items with sentence fact-checking annotation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:#ddd;">
+                <h2><a href="items8/">{{ items_with_sentence_fc_annotation }}</a></h2>
+                <p>Items with sentence fact-checking annotation</p>
+            </div>
+        {% endif %}
+
+        {% if sentences_with_fc_annotation == 0 %}
+            <div class="column" style="background-color:#ddd;">
+                <h2>{{ sentences_with_fc_annotation }}</h2>
+                <p>Sentences with fact-checking annotation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:darkkhaki;">
+                <h2><a href="sentences8/">{{ sentences_with_fc_annotation }}</a></h2>
+                <p>Sentences with fact-checking annotation</p>
+            </div>
+        {% endif %}
+
+        <div class="column" style="background-color:whitesmoke;">
+            {% if external_items_with_fc_classification > 0 %}
+                <h2><a href="extitems8/">{{ external_items_with_fc_classification }}</a></h2>
+                <p>External items with fact-checking classification</p>
+            {% endif %}
+        </div>
+
+        <div class="column" style="background-color:whitesmoke;">
+            {% if external_sentences_with_fc_classification > 0 %}
+                <h2><a href="extsentences8/">{{ external_sentences_with_fc_classification }}</a></h2>
+                <p>External sentences with fact-checking classification</p>
+            {% endif %}
+        </div>
+
+        {% if configuration_show_tweets == True %}
+            {% if tweets_with_fc_annotation == 0 %}
+                <div class="column" style="background-color:darkkhaki;">
+                    <h2>{{ tweets_with_fc_annotation }}</h2>
+                    <p>Tweets with fact-checking annotation</p>
+                </div>
+            {% else %}
+                <div class="column" style="background-color:darkkhaki;">
+                    <h2><a href="tweets8/">{{ tweets_with_fc_annotation }}</a></h2>
+                    <p>Tweets with fact-checking annotation</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+
+    <div class="row">
+        {% if items_with_fc_annotation == 0 %}
+            <div class="column" style="background-color:darkkhaki;">
+                <h2>{{ items_with_fc_annotation }}</h2>
+                <p>Items with fact-checking annotation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:darkkhaki;">
+                <h2><a href="items9/">{{ items_with_fc_annotation }}</a></h2>
+                <p>Items with fact-checking annotation</p>
+            </div>
+        {% endif %}
+
+        {% if sentences_with_item_fc_annotation == 0 %}
+            <div class="column" style="background-color:#ddd;">
+                <h2>{{ sentences_with_item_fc_annotation }}</h2>
+                <p>Sentences with item fact-checking annotation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:darkkhaki;">
+                <h2><a href="sentences9/">{{ sentences_with_item_fc_annotation }}</a></h2>
+                <p>Sentences with item fact-checking annotation</p>
+            </div>
+        {% endif %}
+
+        {% if external_items_with_fc_annotation == 0 %}
+            <div class="column" style="background-color:darkkhaki;">
+                <h2>{{ external_items_with_fc_annotation }}</h2>
+                <p>External items with fact-checking annotation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:darkkhaki;">
+                <h2><a href="extitems9/">{{ external_items_with_fc_annotation }}</a></h2>
+                <p>External items with fact-checking annotation</p>
+            </div>
+        {% endif %}
+
+        {% if external_sentences_with_item_fc_annotation == 0 %}
+            <div class="column" style="background-color:#ddd;">
+                <h2>{{ external_sentences_with_item_fc_annotation }}</h2>
+                <p>External sentences with item fact-checking annotation</p>
+            </div>
+        {% else %}
+            <div class="column" style="background-color:darkkhaki;">
+                <h2><a href="extsentences9/">{{ external_sentences_with_item_fc_annotation }}</a></h2>
+                <p>External sentences with item fact-checking annotation</p>
+            </div>
+        {% endif %}
+
+        {% if configuration_show_tweets == True %}
+            <div class="column">
+            </div>
+        {% endif %}
+    </div>
+
+
+    <div class="row">
+        <div class="column">
+        </div>
+        <div class="column">
+        </div>
+        <div class="column">
+        </div>
+        <div class="column">
+        </div>
+
+        {% if configuration_show_tweets == True %}
+            <div class="column">
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
