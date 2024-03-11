@@ -1,0 +1,18 @@
+{% extends "annotate/base_generic.html" %}
+
+{% block sidebar %}
+<a href="../..">Dashboard</a>
+{% endblock %}
+
+{% block page_title %}
+Delete record
+{% endblock %}
+
+{% block content %}
+<p>Are you sure you want to delete the current record?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Yes, delete">
+</form>
+{% endblock %}

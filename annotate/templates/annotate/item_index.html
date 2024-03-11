@@ -1,0 +1,97 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+{% load static %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+<a href="{% url 'annotate:item_create' %}">> New</a>
+{% endblock %}
+
+{% block page_title %}
+Items
+{% endblock %}
+
+{% block content %}
+    {% if item_list %}
+
+        <table class="simple_table">
+            <colgroup>
+                <col width="6%" />
+                <col width="4%" />
+                <col width="4%" />
+                <col width="5%" />
+                <col width="7%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="8%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="1%" />
+                <col width="26%" />
+            </colgroup>
+
+            <tr>
+                <th></th>
+                <th>{% get_verbose_field_name item_list.0 "id" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "url_ok" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "needs_revision" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "crawl_date" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "review_level" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "item_class_4" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "item_class_4_auto" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "item_class_auto" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "review_entity" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "review_url" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "url" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "url_2" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "title" %}</th>
+            </tr>
+
+            {% for item in item_list %}
+            <tr>
+                {% if item.review_level == 0 %}
+                    <td><a href="{% url 'annotate:item_detail0' item.id %}" title="View item">&#128065;</a>
+                        <a href="{% url 'annotate:item_update' item.id %}?next={{ request.get_full_path }}" title="Edit item">&#128221;</a>
+                        <a id="changeSkipValidations" title="Change skip validations" href="#" onclick="ChangeSkipValidations({{ item.id }}, {{ item.skip_validations|yesno:"true,false"  }});return false;">&#9989;</a>
+                        <a id="discardItem" title="Discard item" href="#" onclick="DiscardItem({{ item.id }});return false;">&#10060;</a>
+                    </td>
+                {% else %}
+                    <td><a href="{% url 'annotate:item_detail' item.id %}" title="View item">&#128065;</a>
+                        <a href="{% url 'annotate:item_update' item.id %}?next={{ request.get_full_path }}" title="Edit item">&#128221;</a></td>
+                {% endif %}
+                <td>{{ item.id }}</td>
+                <td>{{ item.url_ok }}</td>
+                {% if item.needs_revision %}
+                    <td> &#10007; </td>
+                {% else %}
+                    <td> </td>
+                {% endif %}
+                <td>{{ item.crawl_date }}</td>
+                <td>{{ item.review_level }}</td>
+                <td>{{ item.item_class_4 }}</td>
+                <td>{{ item.item_class_4_auto }}</td>
+                <td>{{ item.item_class_auto }}</td>
+                <td>{{ item.review_entity }}</td>
+                <td><a href="{{ item.review_url }}" target="_blank">{{ item.review_url }}</a></td>
+                <td><a href="{{ item.url }}" target="_blank">{{ item.url }}</a></td>
+                {% if item.url_2 == '' %}
+                    <td> </td>
+                {% else %}
+                    <td>*</td>
+                {% endif %}
+                <td>{{ item.title }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <div class="row">
+            <p>No items are available.</p>
+        </div>
+    {% endif %}
+
+    <script src="{% static 'annotate/js/item.js' %}"></script>
+
+{% endblock %}

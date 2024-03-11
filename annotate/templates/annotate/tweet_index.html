@@ -1,0 +1,58 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">Dashboard</a>
+{% endblock %}
+
+{% block page_title %}
+Tweets
+{% endblock %}
+
+{% block content %}
+
+    {% if tweet_list %}
+
+        <table class="simple_table">
+            <colgroup>
+                <col width="5%" />
+                <col width="15%" />
+                <col width="10%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="100%" />
+            </colgroup>
+
+            <tr>
+                <th>{% get_verbose_field_name tweet_list.0 "id" %}</th>
+                <th>{% get_verbose_field_name tweet_list.0 "crawl_date" %}</th>
+                <th>{% get_verbose_field_name tweet_list.0 "type" %}</th>
+                <th>{% get_verbose_field_name tweet_list.0 "review_level" %}</th>
+                <th>{% get_verbose_field_name tweet_list.0 "check_worthy" %}</th>
+                <th>{% get_verbose_field_name tweet_list.0 "tweet_class" %}</th>
+                <th>{% get_verbose_field_name tweet_list.0 "full_text" %}</th>
+            </tr>
+
+            {% for tweet in tweet_list %}
+            <tr>
+                <td><a href="{% url 'annotate:tweet_detail' tweet.id %}">{{ tweet.id }}</a></td>
+                <td>{{ tweet.crawl_date }}</td>
+                <td>{{ tweet.type }}</td>
+                <td>{{ tweet.review_level }}</td>
+                <td>{{ tweet.check_worthy }}</td>
+                <td>{{ tweet.tweet_class }}</td>
+                <td class="ellipsis_cell">{{ tweet.full_text }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <div class="content">
+            <div class="row">
+                <p>No tweets are available.</p>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

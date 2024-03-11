@@ -1,0 +1,124 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+
+{% if sentence.skip_validations %}
+  {% if sentence.review_level == 9 %}
+    <a href="{% url 'annotate:ext_cw_sentence_index9' %}">< Sentences</a>
+  {% endif %}
+{% else %}
+  {% if sentence.review_level == 6 %}
+    <a href="{% url 'annotate:cw_sentence_index6' %}">< Sentences</a>
+  {% endif %}
+  {% if sentence.review_level == 7 %}
+    <a href="{% url 'annotate:cw_sentence_index7' %}">< Sentences</a>
+  {% endif %}
+  {% if sentence.review_level == 8 %}
+    <a href="{% url 'annotate:cw_sentence_index8' %}">< Sentences</a>
+  {% endif %}
+  {% if sentence.review_level == 9 %}
+    <a href="{% url 'annotate:cw_sentence_index9' %}">< Sentences</a>
+  {% endif %}
+{% endif %}
+{% endblock %}
+
+{% block page_title %}
+Edit Check Worthy Sentence
+{% endblock %}
+
+{% block content %}
+<!-- <ul> -->
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <li><p class="form_title">{% get_verbose_field_name sentence "title" %}</p></li>
+    <li>{{ sentence.title }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name sentence "new_sentence_id" %}</p></li>
+    <li>{{ sentence.new_sentence_id }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name sentence "sentence" %}</p></li>
+    <li>{{ sentence.sentence }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name sentence "rating" %}</p></li>
+    <li>{{ sentence.rating }}</li>
+
+    <li><p class="form_title">{{ sentence.get_review_url_verbose_name }}</p></li>
+    <li><a href="{{ sentence.get_review_url }}" target="_blank">{{ sentence.get_review_url }}</a></li>
+
+    <li><p class="form_title">{% get_verbose_field_name sentence "review_level" %}</p></li>
+    <li>{{ form.review_level }}</li>
+    <li>{{ form.review_level.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name sentence "check_worthy" %}</p></li>
+    <li>{{ form.check_worthy }}</li>
+    <li>{{ form.check_worthy.errors.label_tag }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name sentence "sentence_class" %}</p></li>
+    <li>{{ form.sentence_class }}</li>
+    <li>{{ form.sentence_class.errors.label_tag }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name sentence "sentence_class_auto" %}</p></li>
+    <li>{{ sentence.sentence_class_auto }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name sentence "sentence_class_score_auto" %}</p></li>
+    <li>{{ sentence.sentence_class_score_auto }}</li>
+
+    <li>
+      <table class="columns_table">
+        <colgroup>
+          <col width="40%" />
+          <col width="20%" />
+          <col width="40%" />
+        </colgroup>
+        <tr>
+          <td></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "manually_identified_predicate" %}</p></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>{{ form.manually_identified_predicate }}{{ form.manually_identified_predicate.errors.label_tag }}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><p class="form_title">{% get_verbose_field_name sentence "subject" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "predicate" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "object" %}</p></td>
+        </tr>
+        <tr>
+          <td>{{ sentence.subject }}</td>
+          <td>{{ sentence.predicate }}</td>
+          <td>{{ sentence.object }}</td>
+        </tr>
+        <tr>
+          <td><p class="form_title">{% get_verbose_field_name sentence "big_subject" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "big_predicate" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "big_object" %}</p></td>
+        </tr>
+        <tr>
+          <td>{{ sentence.big_subject }}</td>
+          <td>{{ sentence.big_predicate }}</td>
+          <td>{{ sentence.big_object }}</td>
+        </tr>
+        <tr>
+          <td><p class="form_title">{% get_verbose_field_name sentence "subject_cuis" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "predicate_cuis" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name sentence "object_cuis" %}</p></td>
+        </tr>
+        <tr>
+          <td>{{ sentence.subject_cuis }}</td>
+          <td>{{ sentence.predicate_cuis }}</td>
+          <td>{{ sentence.object_cuis }}</td>
+        </tr>
+      </table>
+    </li>
+
+    <li>
+      <input type="submit" value="Update Sentence">
+    </li>
+  </form>
+<!-- </ul> -->
+{% endblock %}

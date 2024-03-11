@@ -1,0 +1,34 @@
+{% extends "annotate/base_generic.html" %}
+
+{% block page_title %}
+Login
+{% endblock %}
+
+{% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+  {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+  {% else %}
+    <p>Please login to see this page.</p>
+  {% endif %}
+{% endif %}
+
+{% block content %}
+  <!-- class form_login_username overrides 100% text input lenght defined in form style -->
+<form action="" method="post", class="form_login_username">
+    {% csrf_token %}
+
+    <li><p class="form_title">{{ form.username.label_tag }}</p></li>
+    <li>{{ form.username }}</li>
+    <li><p class="form_title">{{ form.password.label_tag }}</p></li>
+    <li>{{ form.password }}</li>
+    <li>
+      <input type="submit" value="Login">
+    </li>
+    <li><a href="{% url 'password_reset' %}">Lost password?</a></li>
+  </form>
+{% endblock %}

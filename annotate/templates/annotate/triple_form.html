@@ -1,0 +1,59 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+<a href="{% url 'annotate:triples_index' %}">< Triples</a>
+{% endblock %}
+
+{% block page_title %}
+Edit Triple
+{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+
+    <li><p class="form_title">{% get_verbose_field_name triple "id" %}</p></li>
+    <li>{{ triple.id }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name triple "item_id" %}</p></li>
+    <li>{{ triple.item_id }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name triple "sentence_id" %}</p></li>
+    <li>{{ triple.sentence_id }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name triple "publication_date" %}</p></li>
+    <li>{{ triple.publication_date }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name triple "subject" %}</p></li>
+    <li>{{ form.subject }}</li>
+    <li>{{ form.subject.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name triple "predicate" %}</p></li>
+    <li>{{ form.predicate }}</li>
+    <li>{{ form.predicate.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name triple "object" %}</p></li>
+    <li>{{ form.object }}</li>
+    <li>{{ form.object.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name triple "sentence_class" %}</p></li>
+    <li>{{ triple.sentence_class }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name triple "sentence_check_worthy" %}</p></li>
+    <li>{{ triple.sentence_check_worthy }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name triple "item_class_4" %}</p></li>
+    <li>{{ triple.item_class_4 }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name triple "instance_type" %}</p></li>
+    <li>{{ form.instance_type }}</li>
+    <li>{{ form.instance_type.errors }}</li>
+
+
+    <li>
+      <input type="submit" value="Update Item">
+    </li>
+  </form>
+{% endblock %}

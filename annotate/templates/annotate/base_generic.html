@@ -1,0 +1,65 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'annotate/css/style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% block title %}<title>Annotate</title>{% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{% static 'annotate/img/favicon-16x16.png' %}"/>
+
+    {% block head %}
+    {% endblock %}
+
+  </head>
+
+  <body>
+    <div class="sidenav">
+      {% block sidebar %}
+      {% endblock %}
+
+      {% if user.is_authenticated %}
+        <p>{{ user.get_username }}</p>
+        <a href="{% url 'logout'%}">Logout</a>
+      {% else %}
+        {% if "accounts/login" not in request.path and "accounts/logout" not in request.path and "accounts/password_reset" not in request.path %}
+          <a href="{% url 'login'%}?next=/annotate/">Login</a>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <div class="content">
+
+      <div class="row">
+        <h2>{% block page_title %}{% endblock %}</h2>
+      </div>
+
+      {% block pagination %}
+        {% if is_paginated %}
+          <div class="pagination">
+            <span class="step-links">
+              {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+              {% endif %}
+
+              page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+              {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+            </span>
+          </div>
+        {% endif %}
+      {% endblock %}
+
+      {% block content %}
+      {% endblock %}
+
+    </div>
+  </body>
+
+</html>

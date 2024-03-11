@@ -1,0 +1,58 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+{% endblock %}
+
+{% block page_title %}
+Items main topic/claim
+{% endblock %}
+
+{% block content %}
+    {% if item_list %}
+
+        <table class="simple_table">
+            <colgroup>
+                <col width="3%" />
+                <col width="5%" />
+                <col width="8%" />
+                <col width="8%" />
+                <col width="8%" />
+                <col width="20%" />
+                <col width="20%" />
+                <col width="100%" />
+            </colgroup>
+
+            <tr>
+                <th></th>
+                <th>{% get_verbose_field_name item_list.0 "id" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "crawl_date" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "review_level" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "item_class_4" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "main_topic" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "main_claim" %}</th>
+                <th>{% get_verbose_field_name item_list.0 "title" %}</th>
+            </tr>
+
+            {% for item in item_list %}
+            <tr>
+                <td><a href="{% url 'annotate:item_topics_update' item.id %}?next={{ request.get_full_path }}" title="Edit topic/claim">&#128221;</a></td>
+                <td>{{ item.id }}</td>
+                <td>{{ item.crawl_date }}</td>
+                <td>{{ item.review_level }}</td>
+                <td>{{ item.item_class_4 }}</td>
+                <td class="ellipsis_cell">{{ item.main_topic }}</td>
+                <td class="ellipsis_cell">{{ item.main_claim }}</td>
+                <td class="ellipsis_cell">{{ item.title }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <div class="row">
+            <p>No items are available.</p>
+        </div>
+    {% endif %}
+
+{% endblock %}

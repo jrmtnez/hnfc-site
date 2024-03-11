@@ -1,0 +1,128 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+
+{% if item.skip_validations %}
+  {% if item.review_level == 0 %}
+    <a href="{% url 'annotate:ext_item_index0' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 5 %}
+    <a href="{% url 'annotate:ext_item_index5' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 9 %}
+    <a href="{% url 'annotate:ext_item_index9' %}">< Items</a>
+  {% endif %}
+{% else %}
+  {% if item.review_level == 0 %}
+    <a href="{% url 'annotate:item_index0' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 2 %}
+    <a href="{% url 'annotate:item_index2' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 4 %}
+    <a href="{% url 'annotate:item_index4' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 5 %}
+    <a href="{% url 'annotate:item_index5' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 6 %}
+    <a href="{% url 'annotate:item_index6' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 7 %}
+    <a href="{% url 'annotate:item_index7' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 8 %}
+    <a href="{% url 'annotate:item_index0' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 9 %}
+    <a href="{% url 'annotate:item_index9' %}">< Items</a>
+  {% endif %}
+{% endif %}
+
+<a href="{% url 'annotate:item_update' item.id %}">> Edit</a>
+<a href="{% url 'annotate:item_delete' item.id %}">> Delete</a>
+{% endblock %}
+
+{% block page_title %}
+Item Detail
+{% endblock %}
+
+{% block content %}
+<table class="detail_table">
+  <colgroup>
+    <col width="15%" />
+    <col width="100%" />
+  </colgroup>
+
+  <tr><td><strong>{% get_verbose_field_name item "title" %}:</strong></td><td>{{ item.title }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "type" %}:</strong></td><td>{{ item.type }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "abstract" %}:</strong></td><td>{{ item.abstract }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "publication_date" %}:</strong></td><td>{{ item.publication_date }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "source_entity" %}:</strong></td><td>{{ item.source_entity }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "review_entity" %}:</strong></td><td>{{ item.review_entity }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "review_url" %}:</strong></td><td><a href="{{ item.review_url }}" target="_blank">{{ item.review_url }}</a></td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "claim" %}:</strong></td><td>{{ item.claim }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "original_rating" %}:</strong></td><td>{{ item.original_rating }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "rating" %}:</strong></td><td>{{ item.rating }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "item_class" %}:</strong></td><td>{{ item.item_class }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "item_class_4" %}:</strong></td><td>{{ item.item_class_4 }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "item_class_auto" %}:</strong></td><td>{{ item.item_class_auto }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "item_class_4_auto" %}:</strong></td><td>{{ item.item_class_4_auto }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "crawl_date" %}:</strong></td><td>{{ item.crawl_date }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "url" %}:</strong></td><td><a href="{{ item.url }}" target="_blank">{{ item.url }}</a></td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "url_2" %}:</strong></td><td><a href="{{ item.url_2 }}" target="_blank">{{ item.url_2 }}</a></td></tr>
+  <!-- <tr><td><strong>{% get_verbose_field_name item "text" %}:</strong></td><td>{{ item.text }}</td></tr> -->
+
+  <tr><td><strong>Sentences:</strong></td>
+  <td>
+    <table class="detail_table">
+      <colgroup>
+        <col width="7%" />
+        <col width="10%" />
+        <col width="10%" />
+        <col width="10%" />
+        <col width="10%" />
+        <col width="100%" />
+      </colgroup>
+      <tr>
+        <td style="text-decoration: underline;">{% get_verbose_field_name item.get_sentences.0 "new_sentence_id" %}</td>
+        <td style="text-decoration: underline;">{% get_verbose_field_name item.get_sentences.0 "sentence_class" %}</td>
+        <td style="text-decoration: underline;">{% get_verbose_field_name item.get_sentences.0 "sentence_class_auto" %}</td>
+        <td style="text-decoration: underline;">{% get_verbose_field_name item.get_sentences.0 "check_worthy" %}</td>
+        <td style="text-decoration: underline;">{% get_verbose_field_name item.get_sentences.0 "big_predicate" %}</td>
+        <td style="text-decoration: underline;">{% get_verbose_field_name item.get_sentences.0 "sentence" %}</td>
+      </tr>
+      {% for sentence in item.get_sentences %}
+      <tr>
+        {% if sentence.check_worthy == "FR" %}
+          <td style="color:slateblue;"><a href="{% url 'annotate:cw_sentence_update' sentence.id %}" title="Edit sentence">&#128221;</a>{{sentence.new_sentence_id}}</td>
+          <td style="color:slateblue;">{{sentence.sentence_class}}</td>
+          <td style="color:slateblue;">{{sentence.sentence_class_auto}}</td>
+          <td style="color:slateblue;">{{sentence.check_worthy}}</td>
+          <td style="color:slateblue;">{{sentence.big_predicate}}</td>
+          <td style="color:slateblue;">{{sentence.sentence}}</td>
+        {% else %}
+          <td><a href="{% url 'annotate:cw_sentence_update' sentence.id %}" title="Edit sentence">&#128221;</a>{{sentence.new_sentence_id}}</td>
+          <td>{{sentence.sentence_class}}</td>
+          <td>{{sentence.sentence_class_auto}}</td>
+          <td>{{sentence.check_worthy}}</td>
+          <td>{{sentence.big_predicate}}</td>
+          <td>{{sentence.sentence}}</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </table>
+  </td></tr>
+
+  <tr><td><strong>{% get_verbose_field_name item "review_summary" %}:</strong></td><td>{{ item.review_summary }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "review_level" %}:</strong></td><td>{{ item.review_level }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "url_ok" %}:</strong></td><td>{{ item.url_ok }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "no_health_useless" %}:</strong></td><td>{{ item.no_health_useless }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "needs_revision" %}:</strong></td><td>{{ item.needs_revision }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "instance_type" %}:</strong></td><td>{{ item.instance_type }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "main_topic" %}:</strong></td><td>{{ item.main_topic }}</td></tr>
+  <tr><td><strong>{% get_verbose_field_name item "main_claim" %}:</strong></td><td>{{ item.main_claim }}</td></tr>
+</table>
+{% endblock %}

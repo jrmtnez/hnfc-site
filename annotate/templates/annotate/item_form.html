@@ -1,0 +1,147 @@
+{% extends "annotate/base_generic.html" %}
+{% load verbose_names %}
+
+{% block sidebar %}
+<a href="{% url 'annotate:index' %}">< Dashboard</a>
+
+{% if item.skip_validations %}
+  {% if item.review_level == 0 %}
+    <a href="{% url 'annotate:ext_item_index0' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 5 %}
+    <a href="{% url 'annotate:ext_item_index5' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 9 %}
+    <a href="{% url 'annotate:ext_item_index9' %}">< Items</a>
+  {% endif %}
+{% else %}
+  {% if item.review_level == 0 %}
+    <a href="{% url 'annotate:item_index0' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 2 %}
+    <a href="{% url 'annotate:item_index2' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 4 %}
+    <a href="{% url 'annotate:item_index4' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 5 %}
+    <a href="{% url 'annotate:item_index5' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 6 %}
+    <a href="{% url 'annotate:item_index6' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 7 %}
+    <a href="{% url 'annotate:item_index7' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 8 %}
+    <a href="{% url 'annotate:item_index0' %}">< Items</a>
+  {% endif %}
+  {% if item.review_level == 9 %}
+    <a href="{% url 'annotate:item_index9' %}">< Items</a>
+  {% endif %}
+{% endif %}
+{% endblock %}
+
+{% block page_title %}
+Edit Item
+{% endblock %}
+
+{% block content %}
+<!-- <ul> -->
+<form action="" method="post">
+    {% csrf_token %}
+
+    <li><p class="form_title">{% get_verbose_field_name item "title" %}</p></li>
+    <li>{{ form.title }}</li>
+    <li>{{ form.title.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "claim" %}</p></li>
+    <li>{{ item.claim }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "source_entity" %}</p></li>
+    <li>{{ form.source_entity }}</li>
+    <li>{{ form.source_entity.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "url" %}</p></li>
+    <li>{{ form.url }}</li>
+    <li>{{ form.url.errors.label_tag }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "url_2" %}</p></li>
+    <li>{{ form.url_2 }}</li>
+    <li>{{ form.url_2.errors.label_tag }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "review_url" %}</p></li>
+    <li><a href="{{ item.review_url }}" target="_blank">{{ item.review_url }}</a></li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "text" %}</p></li>
+    <li>{{ form.text }}</li>
+    <li>{{ form.text.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "item_class" %}</p></li>
+    <li>{{ form.item_class }}</li>
+    <li>{{ form.item_class.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "item_class_4" %}</p></li>
+    <li>{{ form.item_class_4 }}</li>
+    <li>{{ form.item_class_4.errors }}</li>
+
+    <li>
+      <table class="columns_table">
+        <colgroup>
+          <col width="50%" />
+          <col width="50%" />
+        </colgroup>
+        <tr>
+          <td><p class="form_title">{% get_verbose_field_name item "item_class_auto" %}</p></td>
+          <td><p class="form_title">{% get_verbose_field_name item "item_class_4_auto" %}</p></td>
+        </tr>
+        <tr>
+          <td>{{ item.item_class_auto }}</td>
+          <td>{{ item.item_class_4_auto }}</td>
+        </tr>
+      </table>
+    </li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "url_ok" %}</p></li>
+    <li>{{ form.url_ok }}</li>
+    <li>{{ form.url_ok.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "no_health_useless" %}</p></li>
+    <li>{{ form.no_health_useless }}</li>
+    <li>{{ form.no_health_useless.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "review_level" %}</p></li>
+    <li>{{ form.review_level }}</li>
+    <li>{{ form.review_level.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "skip_validations" %}</p></li>
+    <li>{{ form.skip_validations }}</li>
+    <li>{{ form.skip_validations.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "instance_type" %}</p></li>
+    <li>{{ form.instance_type }}</li>
+    <li>{{ form.instance_type.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "needs_revision" %}</p></li>
+    <li>{{ form.needs_revision }}</li>
+    <li>{{ form.needs_revision.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "revision_reason" %}</p></li>
+    <li>{{ form.revision_reason }}</li>
+    <li>{{ form.revision_reason.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "main_topic" %}</p></li>
+    <li>{{ form.main_topic }}</li>
+    <li>{{ form.main_topic.errors }}</li>
+
+    <li><p class="form_title">{% get_verbose_field_name item "main_claim" %}</p></li>
+    <li>{{ form.main_claim }}</li>
+    <li>{{ form.main_claim.errors }}</li>
+
+
+    <li>
+      <input type="submit" value="Update Item">
+    </li>
+  </form>
+<!-- </ul> -->
+{% endblock %}
