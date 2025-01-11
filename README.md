@@ -52,6 +52,7 @@ Please see the LICENSE file for details. Downloading data indicates your accepta
 	note = {Publisher: Public Library of Science},
 	keywords = {Grammar, Graphs, Language, Linguistic morphology, Machine learning, Social networks, Syntax, Vaccination and immunization},
 	pages = {e0305362},
+}
 ```
 
 
